@@ -1,0 +1,83 @@
+SELECT ① FROM ② WHERE ③
+
+①取得したいカラム名
+②テーブル名
+③条件
+
+例1) id, feed, user_id, createdからむを対象に全レコード取得
+
+SELECT `id`, `feed`, `user_id`, `created` FROM feeds WHERE 1
+
+
+例2) 全カラムを対象にuser_idが16のレコードのみ取得
+
+SELECT * FROM `feeds` WHERE `user_id` = 16
+
+
+【テーブル結合 LEFT JOIN句】
+主役テーブルを左に、参照したいテーブルを右におくJOIN句
+構文 : SELECT ① FROM ② LEFT JOIN ③ ON ④ WHERE ⑤
+①取得したいカラム名
+②主役テーブル
+③参照テーブル
+④結合条件(外部キー使用)
+⑤条件
+※テーブルが複数出てくるため、カラム名の指定には`feed`. `id`のようにテーブル名からはじめ、ドットでつなぎカラム名を指定します。
+
+SELECT * FROM `feeds` LEFT JOIN `users` ON `feeds`.`user_id`=`users`.`id` WHERE 1
+
+→④結合条件テンプレート
+`主役テーブル`.`外部キー`=`参照テーブル`.`主キー`
+
+テーブルにあるキーについて
+主キー: テーブル内で一意である情報
+外部キー: 参照先の主キーと一致する情報
+
+例3) ONの後の結合条件のみ
+主役テーブル members
+主キー: id
+外部キー: tweet_id
+
+参照テーブル tweets
+主キー: id
+
+SLECT 〜 ON `members`.`tweet_id`=`tweets`.`id`
+
+【カラムの制限】
+SELECT `feeds`.*,`users`.`name`,`users`.`img_name` FROM `feeds` LEFT JOIN `users` ON `feeds`.`user_id`=`users`.`id` WHERE 1
+
+【テーブル名のエイリアス AS句】
+使い方: `テーブル名` AS `別名`
+SELECT `f`.*,`u`.`name`,`u`.`img_name` FROM `feeds` AS `f` LEFT JOIN `users` AS `u` ON `f`.`user_id`=`u`.`id` WHERE 1
+
+【バッククォーとは省略可】
+SELECT f.*,u.name,u.img_name FROM feeds AS f LEFT JOIN users AS u ON f.user_id=u.id WHERE 1
+
+別名のもう一つのメリット
+likesテーブルから何件データが存在するかカウントする
+SELECT COUNT(*) FROM `likes`
+
+こんな配列のカタチになって分かりづらい。
+array("COUNT(*)"=>8)
+
+SELECT COUNT(*) as `cnt` FRAOM `likes`
+->array("cnt"=>8)
+名前がわかりやすくなる
+
+検索いろいろ
+
+完全一致検索
+SELECT * FROM `feeds` WHERE = LIKE 'のび';
+
+あいまい検索
+LIKE演算子を使った検索
+
+前方一致検索
+SELECT * FROM `feeds` WHERE feed LIKE 'のび%';
+
+中間一致検索(前後に文字がない場合もヒット)超便利！
+SELECT * FROM `feeds` WHERE feed LIKE '%のび%';
+＊LearnSNSで使用
+
+後方一致検索
+SELECT * FROM `feeds` WHERE feed LIKE '%のび';
