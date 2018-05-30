@@ -295,14 +295,13 @@ exit();*/
           <?php } ?>
         <div aria-label="Page navigation">
           <ul class="pager">
-            <!-- <li class="previous disabled"><a href="timeline.php?page=<?php echo $page - 1 ?>"><span aria-hidden="true">&larr;</span> Older</a></li> -->
+
             <?php if ($page == 1) { ?>
             <li class="previous disabled"><a href="#"><span aria-hidden="true">&larr;</span> Newer</a></li>
             <?php }else{ ?>
-            <li class="previous disabled"><a href="timeline.php?page=<?php echo $page - 1 ?>"><span aria-hidden="true">&larr;</span> Newer</a></li>
-            <?php if () { ?>
-
+            <li class="previous"><a href="timeline.php?page=<?php echo $page - 1 ?>"><span aria-hidden="true">&larr;</span> Newer</a></li>
             <?php } ?>
+
             <li class="next"><a href="timeline.php?page=<?php echo $page + 1 ?>">Older <span aria-hidden="true">&rarr;</span></a></li>
           </ul>
         </div>
