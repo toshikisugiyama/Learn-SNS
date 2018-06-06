@@ -45,9 +45,8 @@
 
   $follower_data = array($user_id);
   $follower_stmt = $dbh->prepare($follower_sql);
-  $follower_stmt->execute($follower_data);
+  $follower[] = $follower_stmt->execute($follower_data);
 
-  $follower[] = $follower_record;
  ?>
 
 
@@ -101,7 +100,7 @@
       <div class="col-xs-3 text-center">
         <img src="user_profile_img/<?php echo $profile_user["img_name"]; ?>" class="img-thumbnail">
         <h2><?php echo $profile_user["name"]; ?></h2>
-        <!-- <a href="follow.php?user_id=<?php echo $profile_user['id']; ?>"> --><button class="btn btn-default btn-block">フォローする</button><!-- </a> -->
+        <a href="follow.php?follower_id=<?php echo $profile_user['id']; ?>"><button class="btn btn-default btn-block">フォローする</button></a>
 
       </div>
 

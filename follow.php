@@ -4,17 +4,21 @@
 session_start();
 //DBに接続
 require('dbconnect.php');
-//feed_idを取得
+//follower_idを取得
+// http://localhost/LearnSNS/follow.php?follower_id=16というリンクを想定
 $follower_id = $_GET["follower_id"];
 
-var_dump($_SESSION);
+// followボタンを押した人のid
+$user_id = $_SESSION['id'];
+
+var_dump($user_id);
 var_dump($follower_id);
 //SQL文作成(INSERT文)
 $sql = "INSERT INTO `followers` (`id`, `user_id`, `follower_id`) VALUES (NULL, ?, ?);";
 //SQL実行
-$data = array($_SESSION['id'], $follower_id);
+$data = array($user_id,$follower_id);
 $stmt = $dbh->prepare($sql);
 $stmt->execute($data);
 //一覧に戻る
-header("Location: profile.php");
+header("Location: profile.php?user_id=".$follower_id);
  ?>
