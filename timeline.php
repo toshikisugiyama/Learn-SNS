@@ -10,14 +10,25 @@
     //$img_name に写真のファイル名を代入する
     //$nameに名前を代入する
 
-    require('dbconnect.php');
+    require('dbconnect.php');//処理を実行する
+    require("function.php");//関数を宣言してるだけで、処理は実行してない。
 
-    $sql = 'SELECT * FROM `users` WHERE `id`=?';
-    $data = array($_SESSION['id']);
-    $stmt = $dbh->prepare($sql);
-    $stmt->execute($data);
+    // ログイン済みかチェックし、未ログインであれば、ログイン画面に戻す
+    /*if (!isset($_SESSION['id'])) {
+      header("Location: signin.php");
+      exit();// このタイミングで処理を中断する
+    }*/
+    // 戻り値がない場合、代入の形で書かなくても大丈夫
+    check_signin($_SESSION['id']);
 
-    $signin_user = $stmt->fetch(PDO::FETCH_ASSOC);
+    // $sql = 'SELECT * FROM `users` WHERE `id`=?';
+    // $data = array($_SESSION['id']);
+    // $stmt = $dbh->prepare($sql);
+    // $stmt->execute($data);
+
+    // $signin_user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    $signin_user = get_signin_user($dbh, $_SESSION['id']);
 
     $img_name = $signin_user['img_name'];
     $name = $signin_user['name'];

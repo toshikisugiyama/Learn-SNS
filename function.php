@@ -15,4 +15,11 @@
     return $signin_user;
   }
 
+  function check_signin($user_id){
+    if (!isset($_SESSION['id'])) {
+      header("Location: signin.php");
+      exit();// このタイミングで処理を中断する
+    }
+  }
+
  ?>
